@@ -109,58 +109,105 @@ st.markdown("""
         color: var(--text-dark) !important;
     }
 </style>
+
 <style>
-    /* Sidebar styling */
-    section[data-testid="stSidebar"] {
-        background-color: #2C2C2C !important;
-        color: #F5EEDC !important;
+    :root {
+        --primary: #8B4513;
+        --secondary: #D2B48C;
+        --background: #FFF8E7;
+        --card-bg: #FFF8E7; /* unified */
+        --text-dark: #3B2F2F;
+        --success: #7CFC00;
+        --warning: #FFB347;
+        --danger: #FF6347;
     }
 
-    /* General background */
-    body, .stApp, .main {
-        background-color: #FFF8E7 !important;
-        color: #3B2F2F !important;
+    /* 🌿 Global styles */
+    * {
+        color: var(--text-dark) !important;
     }
 
-    /* Inputs (date, text, sliders, etc.) */
-    .stSelectbox, .stSlider, .stNumberInput, .stTextInput, div[data-baseweb="select"] {
-        background-color: #2C2C2C !important;
-        color: #F5EEDC !important;
-        border-radius: 8px !important;
-        border: 1px solid #D2B48C !important;
-    }
-
-    /* Date input text and labels */
-    .stDateInput label, .stDateInput input {
-        color: #F5EEDC !important;
-    }
-
-    /* Metrics */
-    .stMetric {
-        background-color: #2C2C2C !important;
-        color: #F5EEDC !important;
+    body, .stApp, .main, section[data-testid="stSidebar"] {
+        background-color: var(--background) !important;
     }
 
     /* Tabs */
     .stTabs [data-baseweb="tab-list"] button {
-        background-color: #2C2C2C !important;
-        color: #F5EEDC !important;
+        background-color: var(--background) !important;
+        color: var(--text-dark) !important;
         border-radius: 8px;
         padding: 10px 20px;
         margin-right: 5px;
-        border: 2px solid #8B4513 !important;
+        border: 2px solid var(--secondary);
     }
 
     .stTabs [data-baseweb="tab-list"] button[aria-selected="true"] {
-        background-color: #8B4513 !important;
-        color: #FFF8E7 !important;
+        background-color: var(--primary) !important;
+        color: var(--background) !important;
+        border: 2px solid var(--primary);
     }
 
-    /* All text stays brown */
-    * {
-        color: #3B2F2F !important;
+    /* Buttons */
+    .stButton > button {
+        background-color: var(--primary);
+        color: var(--background);
+        border-radius: 8px;
+        padding: 10px 20px;
+        border: none;
+        font-weight: 600;
+    }
+
+    .stButton > button:hover {
+        background-color: #6B3410;
+        color: var(--background);
+    }
+
+    /* Metrics */
+    .stMetric {
+        background-color: var(--background) !important;
+        padding: 15px;
+        border-radius: 8px;
+        border-left: 4px solid var(--primary);
+    }
+
+    /* Inputs */
+    .stSelectbox, .stSlider, .stNumberInput, .stTextInput, div[data-baseweb="select"], .stDateInput {
+        background-color: var(--background) !important;
+        color: var(--text-dark) !important;
+        border-radius: 8px !important;
+        border: 1px solid var(--secondary) !important;
+    }
+
+    .stDateInput label, .stDateInput input {
+        color: var(--text-dark) !important;
+    }
+
+    /* Message boxes */
+    .success-box {
+        background-color: #E8F5E9;
+        border-left: 4px solid var(--success);
+        padding: 15px;
+        border-radius: 8px;
+        color: var(--text-dark);
+    }
+
+    .warning-box {
+        background-color: #FFF3E0;
+        border-left: 4px solid var(--warning);
+        padding: 15px;
+        border-radius: 8px;
+        color: var(--text-dark);
+    }
+
+    .danger-box {
+        background-color: #FFEBEE;
+        border-left: 4px solid var(--danger);
+        padding: 15px;
+        border-radius: 8px;
+        color: var(--text-dark);
     }
 </style>
+
 
 
 """, unsafe_allow_html=True)
