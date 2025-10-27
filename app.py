@@ -11,301 +11,151 @@ st.set_page_config(page_title="💩 PoopLog", layout="wide", initial_sidebar_sta
 # Custom CSS with the user's color palette
 st.markdown("""
 <style>
-    :root {
-        --primary: #8B4513;
-        --secondary: #D2B48C;
-        --background: #FFF8E7;
-        --card-bg: #FAF3E0;
-        --text-dark: #3B2F2F;
-        --success: #7CFC00;
-        --warning: #FFB347;
-        --danger: #FF6347;
-    }
+:root {
+    --primary: #8B4513;
+    --secondary: #D2B48C;
+    --background: #FFF8E7;
+    --card-bg: #FAF3E0;
+    --text-dark: #3B2F2F;
+    --success: #7CFC00;
+    --warning: #FFB347;
+    --danger: #FF6347;
+}
 
-    * {
-        color: var(--text-dark) !important;
-    }
+/* 🌿 Global theme */
+* {
+    color: var(--text-dark) !important;
+}
+body, .stApp, .main, section[data-testid="stSidebar"] {
+    background-color: var(--background) !important;
+}
 
-    body, .stApp, .main {
-        background-color: var(--background);
-    }
+/* 🧭 Tabs */
+.stTabs [data-baseweb="tab-list"] button {
+    background-color: var(--background) !important;
+    color: var(--text-dark) !important;
+    border-radius: 8px;
+    padding: 10px 20px;
+    margin-right: 5px;
+    border: 2px solid var(--secondary);
+}
+.stTabs [data-baseweb="tab-list"] button[aria-selected="true"] {
+    background-color: var(--primary) !important;
+    color: var(--background) !important;
+    border: 2px solid var(--primary);
+}
 
-    .stTabs [data-baseweb="tab-list"] button {
-        background-color: var(--card-bg);
-        color: var(--text-dark);
-        border-radius: 8px;
-        padding: 10px 20px;
-        margin-right: 5px;
-        border: 2px solid var(--secondary);
-    }
+/* 🔘 Buttons */
+.stButton > button {
+    background-color: var(--primary);
+    color: var(--background);
+    border-radius: 8px;
+    padding: 10px 20px;
+    border: none;
+    font-weight: 600;
+}
+.stButton > button:hover {
+    background-color: #6B3410;
+}
 
-    .stTabs [data-baseweb="tab-list"] button[aria-selected="true"] {
-        background-color: var(--primary);
-        color: var(--background);
-        border: 2px solid var(--primary);
-    }
+/* 📊 Metrics */
+.stMetric {
+    background-color: var(--card-bg) !important;
+    padding: 15px;
+    border-radius: 8px;
+    border-left: 4px solid var(--primary);
+}
 
-    .stButton > button {
-        background-color: var(--primary);
-        color: var(--background);
-        border-radius: 8px;
-        padding: 10px 20px;
-        border: none;
-        font-weight: 600;
-    }
-
-    .stButton > button:hover {
-        background-color: #6B3410;
-        color: var(--background);
-    }
-
-    .stMetric {
-        background-color: var(--card-bg);
-        padding: 15px;
-        border-radius: 8px;
-        border-left: 4px solid var(--primary);
-        color: var(--text-dark) !important;
-    }
-
-    .stSelectbox, .stSlider, .stNumberInput, .stTextInput {
-        background-color: var(--card-bg);
-        color: var(--text-dark) !important;
-    }
-
-    h1, h2, h3, h4, h5, h6, p, div, span, label, .stMarkdown, .stText {
-        color: var(--text-dark) !important;
-    }
-
-    .success-box {
-        background-color: #E8F5E9;
-        border-left: 4px solid var(--success);
-        padding: 15px;
-        border-radius: 8px;
-        color: var(--text-dark);
-    }
-
-    .warning-box {
-        background-color: #FFF3E0;
-        border-left: 4px solid var(--warning);
-        padding: 15px;
-        border-radius: 8px;
-        color: var(--text-dark);
-    }
-
-    .danger-box {
-        background-color: #FFEBEE;
-        border-left: 4px solid var(--danger);
-        padding: 15px;
-        border-radius: 8px;
-        color: var(--text-dark);
-    }
-
-    /* Make Plotly chart text dark brown too */
-    .js-plotly-plot text, 
-    .js-plotly-plot .legend text, 
-    .js-plotly-plot .xtick text, 
-    .js-plotly-plot .ytick text {
-        fill: var(--text-dark) !important;
-        color: var(--text-dark) !important;
-    }
-</style>
-
-<style>
-    :root {
-        --primary: #8B4513;
-        --secondary: #D2B48C;
-        --background: #FFF8E7;
-        --card-bg: #FFF8E7; /* unified */
-        --text-dark: #3B2F2F;
-        --success: #7CFC00;
-        --warning: #FFB347;
-        --danger: #FF6347;
-    }
-
-    /* 🌿 Global styles */
-    * {
-        color: var(--text-dark) !important;
-    }
-
-    body, .stApp, .main, section[data-testid="stSidebar"] {
-        background-color: var(--background) !important;
-    }
-
-    /* Tabs */
-    .stTabs [data-baseweb="tab-list"] button {
-        background-color: var(--background) !important;
-        color: var(--text-dark) !important;
-        border-radius: 8px;
-        padding: 10px 20px;
-        margin-right: 5px;
-        border: 2px solid var(--secondary);
-    }
-
-    .stTabs [data-baseweb="tab-list"] button[aria-selected="true"] {
-        background-color: var(--primary) !important;
-        color: var(--background) !important;
-        border: 2px solid var(--primary);
-    }
-
-    /* Buttons */
-    .stButton > button {
-        background-color: var(--primary);
-        color: var(--background);
-        border-radius: 8px;
-        padding: 10px 20px;
-        border: none;
-        font-weight: 600;
-    }
-
-    .stButton > button:hover {
-        background-color: #6B3410;
-        color: var(--background);
-    }
-
-    /* Metrics */
-    .stMetric {
-        background-color: var(--background) !important;
-        padding: 15px;
-        border-radius: 8px;
-        border-left: 4px solid var(--primary);
-    }
-
-    /* Inputs */
-    .stSelectbox, .stSlider, .stNumberInput, .stTextInput, div[data-baseweb="select"], .stDateInput {
-        background-color: var(--background) !important;
-        color: var(--text-dark) !important;
-        border-radius: 8px !important;
-        border: 1px solid var(--secondary) !important;
-    }
-
-    .stDateInput label, .stDateInput input {
-        color: var(--text-dark) !important;
-    }
-
-    /* Message boxes */
-    .success-box {
-        background-color: #E8F5E9;
-        border-left: 4px solid var(--success);
-        padding: 15px;
-        border-radius: 8px;
-        color: var(--text-dark);
-    }
-
-    .warning-box {
-        background-color: #FFF3E0;
-        border-left: 4px solid var(--warning);
-        padding: 15px;
-        border-radius: 8px;
-        color: var(--text-dark);
-    }
-
-    .danger-box {
-        background-color: #FFEBEE;
-        border-left: 4px solid var(--danger);
-        padding: 15px;
-        border-radius: 8px;
-        color: var(--text-dark);
-    }
-</style>
-
-<style>
-/* Fix input widgets staying dark (like date picker, text area, etc.) */
+/* ✍️ Inputs + Text Areas */
 div[data-baseweb="input"], 
 div[data-baseweb="textarea"], 
 div[data-baseweb="select"], 
 .stTextInput input, 
 .stTextArea textarea, 
 .stDateInput input {
-    background-color: #FAF3E0 !important; /* slightly darker than #FFF8E7 for depth */
-    color: #3B2F2F !important; /* dark brown text */
-    border: 1.5px solid #D2B48C !important;
+    background-color: var(--card-bg) !important;
+    color: var(--text-dark) !important;
+    border: 1.5px solid var(--secondary) !important;
     border-radius: 8px !important;
 }
-
-/* Date picker calendar popup */
-div[role="dialog"], .stDateInput button {
-    background-color: #FAF3E0 !important;
-    color: #3B2F2F !important;
-    border: 1.5px solid #D2B48C !important;
-}
-
-/* Fix selected date highlight */
-.stDateInput [data-testid="stDateInputDaySelected"] {
-    background-color: #8B4513 !important; /* brown accent */
-    color: #FFF8E7 !important;
-}
-
-/* Fix text area placeholder text */
 .stTextArea textarea::placeholder,
 .stTextInput input::placeholder {
-    color: #7A5B44 !important; /* lighter brown placeholder */
-}
-</style>
-<style>
-/* 1. Fix dark top bar background (share/star/github bar) */
-header[data-testid="stHeader"] {
-    background-color: #FFF8E7 !important;
-    color: #3B2F2F !important;
-    border-bottom: 1px solid #D2B48C !important;
+    color: #7A5B44 !important;
 }
 
-/* 2. Fix date picker calendar popup */
+/* 📅 Date Picker Popup */
 div[role="dialog"], 
 .stDateInput button, 
 .stDateInput div[data-baseweb="popover"] {
-    background-color: #FAF3E0 !important;
-    color: #3B2F2F !important;
-    border: 1.5px solid #D2B48C !important;
+    background-color: var(--card-bg) !important;
+    color: var(--text-dark) !important;
+    border: 1.5px solid var(--secondary) !important;
 }
-
-/* Calendar cells */
 .stDateInput [data-testid="stDateInputDay"] {
-    background-color: #FAF3E0 !important;
-    color: #3B2F2F !important;
+    background-color: var(--card-bg) !important;
+    color: var(--text-dark) !important;
 }
-
-/* Highlighted date */
 .stDateInput [data-testid="stDateInputDaySelected"] {
-    background-color: #8B4513 !important;
-    color: #FFF8E7 !important;
+    background-color: var(--primary) !important;
+    color: var(--background) !important;
 }
-
-/* Calendar header (month/year) */
 .stDateInput [data-testid="stDateInputHeader"] {
-    background-color: #FAF3E0 !important;
-    color: #3B2F2F !important;
+    background-color: var(--card-bg) !important;
+    color: var(--text-dark) !important;
 }
 
-/* 3. Fix slider background and thumb */
+/* 🧮 Slider */
 .stSlider > div[data-baseweb="slider"] {
-    background-color: #FAF3E0 !important;
-    border: 1.5px solid #D2B48C !important;
+    background-color: var(--card-bg) !important;
+    border: 1.5px solid var(--secondary) !important;
     border-radius: 8px !important;
     padding: 6px !important;
 }
 .stSlider [role="slider"] {
-    background-color: #8B4513 !important;
+    background-color: var(--primary) !important;
 }
-
-/* 4. Fix text/date input boxes — remove ugly enclosures */
 .stDateInput, .stSlider {
     background-color: transparent !important;
     border: none !important;
     box-shadow: none !important;
 }
-div[data-baseweb="input"], .stTextInput, .stDateInput input {
-    background-color: #FAF3E0 !important;
-    border: 1.5px solid #D2B48C !important;
-    border-radius: 8px !important;
-    color: #3B2F2F !important;
+
+/* 🧾 Message Boxes */
+.success-box {
+    background-color: #E8F5E9;
+    border-left: 4px solid var(--success);
+    padding: 15px;
+    border-radius: 8px;
+}
+.warning-box {
+    background-color: #FFF3E0;
+    border-left: 4px solid var(--warning);
+    padding: 15px;
+    border-radius: 8px;
+}
+.danger-box {
+    background-color: #FFEBEE;
+    border-left: 4px solid var(--danger);
+    padding: 15px;
+    border-radius: 8px;
 }
 
-/* 5. Fix label text colors (Ease Level, etc.) */
-label, .stMarkdown p, .stMarkdown span {
-    color: #3B2F2F !important;
+/* 📈 Plotly Chart Text */
+.js-plotly-plot text, 
+.js-plotly-plot .legend text, 
+.js-plotly-plot .xtick text, 
+.js-plotly-plot .ytick text {
+    fill: var(--text-dark) !important;
+    color: var(--text-dark) !important;
+}
+
+/* 🧱 Header bar fix */
+header[data-testid="stHeader"] {
+    background-color: var(--background) !important;
+    color: var(--text-dark) !important;
+    border-bottom: 1px solid var(--secondary) !important;
 }
 </style>
-
 
 """, unsafe_allow_html=True)
 
