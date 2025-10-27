@@ -7,49 +7,65 @@ from google.oauth2.service_account import Credentials
 
 st.markdown("""
 <style>
-/* Date picker dropdown */
+/* Base calendar dropdown */
 div[data-baseweb="datepicker"] {
-    background-color: #fff8e7 !important; /* cream background */
-    color: #2c2c2c !important; /* readable dark text */
-    border: 1px solid #e0d5b5 !important; /* subtle border */
-    box-shadow: 0px 2px 8px rgba(0,0,0,0.1) !important;
+    background-color: #fff8e7 !important; /* your cream bg */
+    color: #2c2c2c !important;
+    border: 1px solid #e0d5b5 !important;
+    box-shadow: 0px 4px 10px rgba(0,0,0,0.15) !important;
 }
 
-/* Calendar grid cells */
+/* Calendar container */
 div[data-baseweb="calendar"] {
     background-color: #fff8e7 !important;
     color: #2c2c2c !important;
 }
 
-/* Days in calendar */
+/* Header (month + year bar) */
+div[data-baseweb="calendar"] div[role="heading"],
+div[data-baseweb="calendar"] > div:first-child {
+    background-color: #fff8e7 !important;
+    color: #2c2c2c !important;
+    border-bottom: 1px solid #e0d5b5 !important;
+}
+
+/* Arrows for month navigation */
+div[data-baseweb="calendar"] svg {
+    fill: #2c2c2c !important;
+}
+
+/* Weekday header row */
+div[data-baseweb="calendar"] div[role="row"]:first-of-type {
+    background-color: #fff8e7 !important;
+    color: #2c2c2c !important;
+}
+
+/* Day buttons */
 div[data-baseweb="calendar"] button {
     background-color: transparent !important;
     color: #2c2c2c !important;
 }
 
-/* Hovered/selected day */
+/* Hover effect */
 div[data-baseweb="calendar"] button:hover {
     background-color: #f2e3b5 !important;
     color: #000 !important;
 }
+
+/* Selected day */
 div[data-baseweb="calendar"] button[aria-selected="true"] {
-    background-color: #f26c4f !important; /* your reddish highlight */
+    background-color: #f26c4f !important;
     color: white !important;
 }
 
-/* Month and year text */
-div[data-baseweb="datepicker"] select, 
-div[data-baseweb="datepicker"] span {
-    color: #2c2c2c !important;
-}
-
-/* Remove weird dark outline when clicking */
+/* Focus/active states cleanup */
 div[data-baseweb="datepicker"] *:focus {
     outline: none !important;
     box-shadow: none !important;
 }
 </style>
 """, unsafe_allow_html=True)
+
 
 
 
