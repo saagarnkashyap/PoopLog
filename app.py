@@ -149,7 +149,8 @@ def get_worksheet():
 
     try:
         # ✅ Try to open the spreadsheet
-        sheet = client.open("PoopLog")
+        # sheet = client.open("PoopLog")
+        sheet = client.open_by_key("1ZeeFkKA8PCTIZcHT4DMtJ2hfv4z0X3nUML680Ir4Ie0")
     except gspread.exceptions.SpreadsheetNotFound:
         try:
             # ✅ Create spreadsheet if it doesn’t exist
