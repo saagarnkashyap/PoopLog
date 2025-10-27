@@ -527,6 +527,65 @@ with tab2:
 
 
 
+# with tab3:
+#     st.subheader("All-Time Statistics")
+    
+#     if len(df) > 0:
+#         col1, col2, col3, col4 = st.columns(4)
+        
+#         with col1:
+#             total_entries = len(df)
+#             st.metric("Total Entries", total_entries, "💩")
+        
+#         with col2:
+#             me_entries = len(df[df['User'] == 'Me'])
+#             st.metric("Your Entries", me_entries, "👤")
+        
+#         with col3:
+#             friend_entries = len(df[df['User'] == 'Friend'])
+#             st.metric("Friend's Entries", friend_entries, "👥")
+        
+#         with col4:
+#             avg_ease = df['Ease'].mean()
+#             st.metric("Avg Ease", f"{avg_ease:.2f}", "📊")
+        
+#         st.markdown("---")
+        
+#         # All-time comparison
+#         df['Category'] = df['Ease'].apply(lambda x: 'Easy' if x >= 0.5 else 'Average')
+#         all_time = df.groupby(['User', 'Category']).size().unstack(fill_value=0)
+        
+#         fig2 = go.Figure()
+        
+#         for user_name in all_time.index:
+#             easy_count = all_time.loc[user_name, 'Easy'] if 'Easy' in all_time.columns else 0
+#             avg_count = all_time.loc[user_name, 'Average'] if 'Average' in all_time.columns else 0
+            
+#             fig2.add_trace(go.Bar(
+#                 name=user_name,
+#                 x=['Easy Poops 😎', 'Average Poops 😐'],
+#                 y=[easy_count, avg_count],
+#                 marker_color=['#7CFC00', '#FFB347'],
+#                 text=[easy_count, avg_count],
+#                 textposition='auto',
+#             ))
+        
+#         fig2.update_layout(
+#             title="All-Time Poop Comparison",
+#             xaxis_title="Poop Category",
+#             yaxis_title="Count",
+#             barmode='group',
+#             plot_bgcolor='#FAF3E0',
+#             paper_bgcolor='#FFF8E7',
+#             font=dict(color='#3B2F2F', size=12),
+#             hovermode='x unified',
+#             height=500
+#         )
+        
+#         st.plotly_chart(fig2, use_container_width=True)
+#     else:
+#         st.info("📭 No data yet. Start logging entries to see statistics!")
+
 with tab3:
     st.subheader("All-Time Statistics")
     
@@ -548,43 +607,110 @@ with tab3:
         with col4:
             avg_ease = df['Ease'].mean()
             st.metric("Avg Ease", f"{avg_ease:.2f}", "📊")
-        
+
         st.markdown("---")
-        
-        # All-time comparison
+
+        # 🧹 Clean date column for plotting
+        if 'Date' in df.columns:
+            df['Date'] = pd.to_datetime(df['Date'], errors='coerce')
+            df = df.dropna(subset=['Date'])
+
+        # 🧮 Categorize poops
         df['Category'] = df['Ease'].apply(lambda x: 'Easy' if x >= 0.5 else 'Average')
-        all_time = df.groupby(['User', 'Category']).size().unstack(fill_value=0)
-        
-        fig2 = go.Figure()
-        
-        for user_name in all_time.index:
-            easy_count = all_time.loc[user_name, 'Easy'] if 'Easy' in all_time.columns else 0
-            avg_count = all_time.loc[user_name, 'Average'] if 'Average' in all_time.columns else 0
-            
-            fig2.add_trace(go.Bar(
-                name=user_name,
-                x=['Easy Poops 😎', 'Average Poops 😐'],
-                y=[easy_count, avg_count],
-                marker_color=['#7CFC00', '#FFB347'],
-                text=[easy_count, avg_count],
-                textposition='auto',
+
+        # 🧠 Compute summary stats
+        all_time_summary = df.groupby(['User', 'Category']).size().unstack(fill_value=0)
+
+        # 🎨 Create two columns for visualizations
+        col_a, col_b = st.columns([2, 1])
+
+        with col_a:
+            # --- Line Trend Graph (Ease over Time) ---
+            import plotly.graph_objects as go
+            import plotly.express as px
+
+            line_fig = go.Figure()
+            colors = px.colors.qualitative.Bold
+
+            for i, user_name in enumerate(df["User"].unique()):
+                user_df = df[df["User"] == user_name].sort_values("Date")
+                line_fig.add_trace(go.Scatter(
+                    x=user_df["Date"],
+                    y=user_df["Ease"],
+                    mode="lines+markers",
+                    name=user_name,
+                    line=dict(color=colors[i % len(colors)], width=3, shape="spline"),
+                    marker=dict(size=8, symbol="circle"),
+                    hovertemplate=(
+                        "<b>%{x|%b %d, %Y}</b><br>"
+                        "Ease: %{y:.2f}<br>"
+                        "User: " + user_name + "<extra></extra>"
+                    ),
+                ))
+
+            # Average trend
+            avg_df = df.groupby("Date")["Ease"].mean().reset_index()
+            line_fig.add_trace(go.Scatter(
+                x=avg_df["Date"],
+                y=avg_df["Ease"],
+                mode="lines",
+                name="Average Trend",
+                line=dict(color="#444", width=3, dash="dot"),
+                opacity=0.8
             ))
-        
-        fig2.update_layout(
-            title="All-Time Poop Comparison",
-            xaxis_title="Poop Category",
-            yaxis_title="Count",
-            barmode='group',
-            plot_bgcolor='#FAF3E0',
-            paper_bgcolor='#FFF8E7',
-            font=dict(color='#3B2F2F', size=12),
-            hovermode='x unified',
-            height=500
+
+            line_fig.update_layout(
+                title="📈 All-Time Ease Trend",
+                xaxis_title="Date",
+                yaxis_title="Ease Level (0 = Struggle 😖, 1 = Smooth 😌)",
+                yaxis=dict(range=[0, 1]),
+                hovermode="x unified",
+                plot_bgcolor="#FAF3E0",
+                paper_bgcolor="#FFF8E7",
+                font=dict(color="#3B2F2F", size=12),
+                height=500,
+                margin=dict(l=40, r=40, t=60, b=40)
+            )
+
+            st.plotly_chart(line_fig, use_container_width=True)
+
+        with col_b:
+            # --- Donut Chart (Category Distribution) ---
+            import plotly.express as px
+
+            total_counts = df['Category'].value_counts().reset_index()
+            total_counts.columns = ['Category', 'Count']
+
+            donut_fig = px.pie(
+                total_counts,
+                values="Count",
+                names="Category",
+                hole=0.5,
+                color_discrete_sequence=["#7CFC00", "#FFB347"]
+            )
+            donut_fig.update_layout(
+                title="💩 Ease Distribution",
+                plot_bgcolor="#FFF8E7",
+                paper_bgcolor="#FFF8E7",
+                font=dict(color="#3B2F2F", size=12),
+                showlegend=True,
+                height=500,
+            )
+
+            st.plotly_chart(donut_fig, use_container_width=True)
+
+        st.markdown("---")
+
+        # 🧾 Show table summary
+        st.markdown("### 🪄 All-Time Breakdown")
+        st.dataframe(
+            df[['Date', 'User', 'Ease', 'Notes']].sort_values('Date'),
+            use_container_width=True
         )
-        
-        st.plotly_chart(fig2, use_container_width=True)
+
     else:
         st.info("📭 No data yet. Start logging entries to see statistics!")
+
 
 st.markdown("---")
 st.markdown("<p style='text-align: center; color: #8B4513; font-size: 12px;'>Made with Kakka by Saagar for Nikhil</p>", unsafe_allow_html=True)
