@@ -342,51 +342,51 @@ with tab1:
         else:
             st.error("Failed to save entry")
 
+
 with tab2:
     st.subheader("This Week's Comparison")
-    
+
     # Filter data for current week
     week_dates = get_week_dates()
     week_start = week_dates[0]
     week_end = week_dates[6]
-    
-    # week_data = df[(pd.to_datetime(df['Date']) >= week_start) & (pd.to_datetime(df['Date']) <= week_end)]
-    # 🧹 Clean and fix Date column before filtering
-if 'Date' in df.columns:
-    # Convert to datetime safely
-    df['Date'] = pd.to_datetime(df['Date'], errors='coerce')
 
-    # Show invalid rows (for debugging only; you can remove this later)
-    invalid_dates = df[df['Date'].isna()]
-    if not invalid_dates.empty:
-        st.warning("⚠️ Some invalid or empty Date entries were ignored:")
-        st.write(invalid_dates)
+    if 'Date' in df.columns:
+        # 🧹 Clean and fix Date column before filtering
+        df['Date'] = pd.to_datetime(df['Date'], errors='coerce')
 
-    # Drop invalid rows
-    df = df.dropna(subset=['Date'])
+        # Optional: show invalid rows
+        invalid_dates = df[df['Date'].isna()]
+        if not invalid_dates.empty:
+            st.warning("⚠️ Some invalid or empty Date entries were ignored:")
+            st.dataframe(invalid_dates)
 
-    # Filter only this week's data
-    week_data = df[
-        (df['Date'] >= week_start) & (df['Date'] <= week_end)
-    ]
-else:
-    st.error("❌ 'Date' column not found in the Google Sheet. Please check the header name.")
-    week_data = pd.DataFrame()
+        # Drop invalid rows
+        df = df.dropna(subset=['Date'])
 
+        # 🗓️ Filter only this week's data
+        week_data = df[
+            (df['Date'] >= week_start) & (df['Date'] <= week_end)
+        ]
+    else:
+        st.error("❌ 'Date' column not found in the Google Sheet. Please check the header name.")
+        week_data = pd.DataFrame()
+
+    # ✅ Only run visualization if we have data
     if len(week_data) > 0:
         # Categorize as easy or average
         week_data['Category'] = week_data['Ease'].apply(lambda x: 'Easy' if x >= 0.5 else 'Average')
-        
+
         # Count by user and category
         comparison = week_data.groupby(['User', 'Category']).size().unstack(fill_value=0)
-        
+
         # Create Plotly bar chart
         fig = go.Figure()
-        
+
         for user_name in comparison.index:
             easy_count = comparison.loc[user_name, 'Easy'] if 'Easy' in comparison.columns else 0
             avg_count = comparison.loc[user_name, 'Average'] if 'Average' in comparison.columns else 0
-            
+
             fig.add_trace(go.Bar(
                 name=user_name,
                 x=['Easy Poops 😎', 'Average Poops 😐'],
@@ -395,7 +395,7 @@ else:
                 text=[easy_count, avg_count],
                 textposition='auto',
             ))
-        
+
         fig.update_layout(
             title="Weekly Poop Comparison",
             xaxis_title="Poop Category",
@@ -407,14 +407,94 @@ else:
             hovermode='x unified',
             height=500
         )
-        
+
         st.plotly_chart(fig, use_container_width=True)
-        
+
         # Weekly stats table
         st.markdown("**Weekly Breakdown:**")
-        st.dataframe(week_data[['Date', 'User', 'Ease', 'Notes']].sort_values('Date'), use_container_width=True)
+        st.dataframe(
+            week_data[['Date', 'User', 'Ease', 'Notes']].sort_values('Date'),
+            use_container_width=True
+        )
+
     else:
         st.info("📭 No entries logged this week yet. Start logging to see comparisons!")
+
+
+
+# with tab2:
+#     st.subheader("This Week's Comparison")
+    
+#     # Filter data for current week
+#     week_dates = get_week_dates()
+#     week_start = week_dates[0]
+#     week_end = week_dates[6]
+    
+#     # week_data = df[(pd.to_datetime(df['Date']) >= week_start) & (pd.to_datetime(df['Date']) <= week_end)]
+#     # 🧹 Clean and fix Date column before filtering
+# if 'Date' in df.columns:
+#     # Convert to datetime safely
+#     df['Date'] = pd.to_datetime(df['Date'], errors='coerce')
+
+#     # Show invalid rows (for debugging only; you can remove this later)
+#     invalid_dates = df[df['Date'].isna()]
+#     if not invalid_dates.empty:
+#         st.warning("⚠️ Some invalid or empty Date entries were ignored:")
+#         st.write(invalid_dates)
+
+#     # Drop invalid rows
+#     df = df.dropna(subset=['Date'])
+
+#     # Filter only this week's data
+#     week_data = df[
+#         (df['Date'] >= week_start) & (df['Date'] <= week_end)
+#     ]
+# else:
+#     st.error("❌ 'Date' column not found in the Google Sheet. Please check the header name.")
+#     week_data = pd.DataFrame()
+
+#     if len(week_data) > 0:
+#         # Categorize as easy or average
+#         week_data['Category'] = week_data['Ease'].apply(lambda x: 'Easy' if x >= 0.5 else 'Average')
+        
+#         # Count by user and category
+#         comparison = week_data.groupby(['User', 'Category']).size().unstack(fill_value=0)
+        
+#         # Create Plotly bar chart
+#         fig = go.Figure()
+        
+#         for user_name in comparison.index:
+#             easy_count = comparison.loc[user_name, 'Easy'] if 'Easy' in comparison.columns else 0
+#             avg_count = comparison.loc[user_name, 'Average'] if 'Average' in comparison.columns else 0
+            
+#             fig.add_trace(go.Bar(
+#                 name=user_name,
+#                 x=['Easy Poops 😎', 'Average Poops 😐'],
+#                 y=[easy_count, avg_count],
+#                 marker_color=['#7CFC00', '#FFB347'],
+#                 text=[easy_count, avg_count],
+#                 textposition='auto',
+#             ))
+        
+#         fig.update_layout(
+#             title="Weekly Poop Comparison",
+#             xaxis_title="Poop Category",
+#             yaxis_title="Count",
+#             barmode='group',
+#             plot_bgcolor='#FAF3E0',
+#             paper_bgcolor='#FFF8E7',
+#             font=dict(color='#3B2F2F', size=12),
+#             hovermode='x unified',
+#             height=500
+#         )
+        
+#         st.plotly_chart(fig, use_container_width=True)
+        
+#         # Weekly stats table
+#         st.markdown("**Weekly Breakdown:**")
+#         st.dataframe(week_data[['Date', 'User', 'Ease', 'Notes']].sort_values('Date'), use_container_width=True)
+#     else:
+#         st.info("📭 No entries logged this week yet. Start logging to see comparisons!")
 
 with tab3:
     st.subheader("All-Time Statistics")
