@@ -532,14 +532,17 @@ with tab2:
         for y in [0.25, 0.5, 0.75]:
             fig.add_hline(y=y, line_dash="dot", line_color="#D3D3D3", opacity=0.4)
 
-        st.plotly_chart(fig, use_container_width=True)
-        fig.update_layout(
+        # 🌸 Fix hover label colors
+fig.update_layout(
     hoverlabel=dict(
-        bgcolor="#FFF8E7",   # your cream background
+        bgcolor="#FFF8E7",   # cream background
         font=dict(color="#3B2F2F"),  # dark brown text
         bordercolor="#D2B48C"        # light brown border
     )
 )
+
+st.plotly_chart(fig, use_container_width=True)
+
 
 
         # --- Summary Table ---
@@ -646,7 +649,17 @@ with tab3:
                 margin=dict(l=40, r=40, t=60, b=40)
             )
 
-            st.plotly_chart(line_fig, use_container_width=True)
+            # 🌸 Fix hover label colors for line graph
+line_fig.update_layout(
+    hoverlabel=dict(
+        bgcolor="#FFF8E7",
+        font=dict(color="#3B2F2F"),
+        bordercolor="#D2B48C"
+    )
+)
+
+st.plotly_chart(line_fig, use_container_width=True)
+
 
         with col_b:
             # --- Donut Chart (Category Distribution) ---
@@ -671,7 +684,16 @@ with tab3:
                 height=500,
             )
 
-            st.plotly_chart(donut_fig, use_container_width=True)
+            donut_fig.update_layout(
+    hoverlabel=dict(
+        bgcolor="#FFF8E7",
+        font=dict(color="#3B2F2F"),
+        bordercolor="#D2B48C"
+    )
+)
+
+st.plotly_chart(donut_fig, use_container_width=True)
+
 
         st.markdown("---")
 
