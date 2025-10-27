@@ -7,61 +7,98 @@ from google.oauth2.service_account import Credentials
 
 st.markdown("""
 <style>
-/* Base calendar dropdown */
+/* ---------------------- */
+/* FIX STREAMLIT DATEPICKER DARK BACKGROUND */
+/* ---------------------- */
+
+/* Outer popover (the floating date picker) */
+div[data-baseweb="popover"] {
+    background-color: #FFF8E7 !important;
+    border: 1px solid #E0D5B5 !important;
+    box-shadow: 0px 4px 10px rgba(0,0,0,0.1) !important;
+}
+
+/* Main datepicker panel */
 div[data-baseweb="datepicker"] {
-    background-color: #fff8e7 !important; /* your cream bg */
-    color: #2c2c2c !important;
-    border: 1px solid #e0d5b5 !important;
-    box-shadow: 0px 4px 10px rgba(0,0,0,0.15) !important;
+    background-color: #FFF8E7 !important;
+    color: #3B2F2F !important;
 }
 
-/* Calendar container */
+/* The main calendar body */
 div[data-baseweb="calendar"] {
-    background-color: #fff8e7 !important;
-    color: #2c2c2c !important;
+    background-color: #FFF8E7 !important;
+    color: #3B2F2F !important;
 }
 
-/* Header (month + year bar) */
-div[data-baseweb="calendar"] div[role="heading"],
+/* Top header (month + year row) */
 div[data-baseweb="calendar"] > div:first-child {
-    background-color: #fff8e7 !important;
-    color: #2c2c2c !important;
-    border-bottom: 1px solid #e0d5b5 !important;
+    background-color: #FFF8E7 !important;
+    color: #3B2F2F !important;
+    border-bottom: 1px solid #E0D5B5 !important;
 }
 
-/* Arrows for month navigation */
-div[data-baseweb="calendar"] svg {
-    fill: #2c2c2c !important;
-}
-
-/* Weekday header row */
+/* Weekday header (Su, Mo, Tu...) */
 div[data-baseweb="calendar"] div[role="row"]:first-of-type {
-    background-color: #fff8e7 !important;
-    color: #2c2c2c !important;
+    background-color: #FFF8E7 !important;
+    color: #3B2F2F !important;
 }
 
-/* Day buttons */
+/* Each date cell */
 div[data-baseweb="calendar"] button {
     background-color: transparent !important;
-    color: #2c2c2c !important;
+    color: #3B2F2F !important;
+    border-radius: 8px !important;
 }
 
-/* Hover effect */
+/* Hover state */
 div[data-baseweb="calendar"] button:hover {
-    background-color: #f2e3b5 !important;
-    color: #000 !important;
+    background-color: #F0E0C0 !important;
+    color: #3B2F2F !important;
 }
 
-/* Selected day */
+/* Selected date */
 div[data-baseweb="calendar"] button[aria-selected="true"] {
-    background-color: #f26c4f !important;
-    color: white !important;
+    background-color: #FF6B57 !important;
+    color: #FFF8E7 !important;
 }
 
-/* Focus/active states cleanup */
+/* Month navigation arrows */
+div[data-baseweb="calendar"] svg {
+    fill: #3B2F2F !important;
+}
+
+/* Remove dark mask from overlay container */
+div[data-baseweb="popover"] div {
+    background-color: #FFF8E7 !important;
+    color: #3B2F2F !important;
+}
+
+/* Remove random black rectangles (caused by baseweb pseudo-elements) */
+div[data-baseweb="calendar"]::before,
+div[data-baseweb="calendar"]::after,
+div[data-baseweb="calendar"] *::before,
+div[data-baseweb="calendar"] *::after {
+    background: none !important;
+}
+
+/* Remove focus outlines */
 div[data-baseweb="datepicker"] *:focus {
     outline: none !important;
     box-shadow: none !important;
+}
+
+/* ---------------------- */
+/* UNIFORM SLIDER SECTION BACKGROUND FIX */
+/* ---------------------- */
+.stSlider, .stNumberInput, .stTextInput {
+    background-color: #FFF8E7 !important;
+    border: 1px solid #E0D5B5 !important;
+}
+
+/* Remove box enclosure highlight */
+.stSlider > div, .stNumberInput > div, .stTextInput > div {
+    background-color: #FFF8E7 !important;
+    border: none !important;
 }
 </style>
 """, unsafe_allow_html=True)
