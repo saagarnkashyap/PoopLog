@@ -21,95 +21,195 @@ st.markdown("""
         --warning: #FFB347;
         --danger: #FF6347;
     }
-    
+
     * {
-        color: #3B2F2F;
+        color: var(--text-dark) !important;
     }
-    
-    body {
-        background-color: #FFF8E7;
+
+    body, .stApp, .main {
+        background-color: var(--background);
     }
-    
-    .stApp {
-        background-color: #FFF8E7;
-    }
-    
-    .main {
-        background-color: #FFF8E7;
-    }
-    
+
     .stTabs [data-baseweb="tab-list"] button {
-        background-color: #FAF3E0;
-        color: #3B2F2F;
+        background-color: var(--card-bg);
+        color: var(--text-dark);
         border-radius: 8px;
         padding: 10px 20px;
         margin-right: 5px;
-        border: 2px solid #D2B48C;
+        border: 2px solid var(--secondary);
     }
-    
+
     .stTabs [data-baseweb="tab-list"] button[aria-selected="true"] {
-        background-color: #8B4513;
-        color: #FFF8E7;
-        border: 2px solid #8B4513;
+        background-color: var(--primary);
+        color: var(--background);
+        border: 2px solid var(--primary);
     }
-    
+
     .stButton > button {
-        background-color: #8B4513;
-        color: #FFF8E7;
+        background-color: var(--primary);
+        color: var(--background);
         border-radius: 8px;
         padding: 10px 20px;
         border: none;
         font-weight: 600;
     }
-    
+
     .stButton > button:hover {
         background-color: #6B3410;
-        color: #FFF8E7;
+        color: var(--background);
     }
-    
+
     .stMetric {
-        background-color: #FAF3E0;
+        background-color: var(--card-bg);
         padding: 15px;
         border-radius: 8px;
-        border-left: 4px solid #8B4513;
+        border-left: 4px solid var(--primary);
+        color: var(--text-dark) !important;
     }
-    
+
     .stSelectbox, .stSlider, .stNumberInput, .stTextInput {
-        background-color: #FAF3E0;
+        background-color: var(--card-bg);
+        color: var(--text-dark) !important;
     }
-    
-    h1, h2, h3, h4, h5, h6 {
-        color: #3B2F2F;
+
+    h1, h2, h3, h4, h5, h6, p, div, span, label, .stMarkdown, .stText {
+        color: var(--text-dark) !important;
     }
-    
-    .stMarkdown {
-        color: #3B2F2F;
-    }
-    
+
     .success-box {
         background-color: #E8F5E9;
-        border-left: 4px solid #7CFC00;
+        border-left: 4px solid var(--success);
         padding: 15px;
         border-radius: 8px;
-        color: #3B2F2F;
+        color: var(--text-dark);
     }
-    
+
     .warning-box {
         background-color: #FFF3E0;
-        border-left: 4px solid #FFB347;
+        border-left: 4px solid var(--warning);
         padding: 15px;
         border-radius: 8px;
-        color: #3B2F2F;
+        color: var(--text-dark);
     }
-    
+
     .danger-box {
         background-color: #FFEBEE;
-        border-left: 4px solid #FF6347;
+        border-left: 4px solid var(--danger);
         padding: 15px;
         border-radius: 8px;
-        color: #3B2F2F;
+        color: var(--text-dark);
+    }
+
+    /* Make Plotly chart text dark brown too */
+    .js-plotly-plot text, 
+    .js-plotly-plot .legend text, 
+    .js-plotly-plot .xtick text, 
+    .js-plotly-plot .ytick text {
+        fill: var(--text-dark) !important;
+        color: var(--text-dark) !important;
     }
 </style>
+
+# <style>
+#     :root {
+#         --primary: #8B4513;
+#         --secondary: #D2B48C;
+#         --background: #FFF8E7;
+#         --card-bg: #FAF3E0;
+#         --text-dark: #3B2F2F;
+#         --success: #7CFC00;
+#         --warning: #FFB347;
+#         --danger: #FF6347;
+#     }
+    
+#     * {
+#         color: #3B2F2F;
+#     }
+    
+#     body {
+#         background-color: #FFF8E7;
+#     }
+    
+#     .stApp {
+#         background-color: #FFF8E7;
+#     }
+    
+#     .main {
+#         background-color: #FFF8E7;
+#     }
+    
+#     .stTabs [data-baseweb="tab-list"] button {
+#         background-color: #FAF3E0;
+#         color: #3B2F2F;
+#         border-radius: 8px;
+#         padding: 10px 20px;
+#         margin-right: 5px;
+#         border: 2px solid #D2B48C;
+#     }
+    
+#     .stTabs [data-baseweb="tab-list"] button[aria-selected="true"] {
+#         background-color: #8B4513;
+#         color: #FFF8E7;
+#         border: 2px solid #8B4513;
+#     }
+    
+#     .stButton > button {
+#         background-color: #8B4513;
+#         color: #FFF8E7;
+#         border-radius: 8px;
+#         padding: 10px 20px;
+#         border: none;
+#         font-weight: 600;
+#     }
+    
+#     .stButton > button:hover {
+#         background-color: #6B3410;
+#         color: #FFF8E7;
+#     }
+    
+#     .stMetric {
+#         background-color: #FAF3E0;
+#         padding: 15px;
+#         border-radius: 8px;
+#         border-left: 4px solid #8B4513;
+#     }
+    
+#     .stSelectbox, .stSlider, .stNumberInput, .stTextInput {
+#         background-color: #FAF3E0;
+#     }
+    
+#     h1, h2, h3, h4, h5, h6 {
+#         color: #3B2F2F;
+#     }
+    
+#     .stMarkdown {
+#         color: #3B2F2F;
+#     }
+    
+#     .success-box {
+#         background-color: #E8F5E9;
+#         border-left: 4px solid #7CFC00;
+#         padding: 15px;
+#         border-radius: 8px;
+#         color: #3B2F2F;
+#     }
+    
+#     .warning-box {
+#         background-color: #FFF3E0;
+#         border-left: 4px solid #FFB347;
+#         padding: 15px;
+#         border-radius: 8px;
+#         color: #3B2F2F;
+#     }
+    
+#     .danger-box {
+#         background-color: #FFEBEE;
+#         border-left: 4px solid #FF6347;
+#         padding: 15px;
+#         border-radius: 8px;
+#         color: #3B2F2F;
+#     }
+# </style>
 """, unsafe_allow_html=True)
 
 # Initialize session state
@@ -204,61 +304,6 @@ def load_data():
         st.error(f"Error loading data: {e}")
         return pd.DataFrame(columns=['Date', 'User', 'Ease', 'Notes'])
 
-
-
-# def get_worksheet():
-#     """Get or create the PoopLog worksheet"""
-#     client = get_google_sheets_client()
-#     if client is None:
-#         return None
-
-#     try:
-#         # ✅ Try to open the spreadsheet
-#         # sheet = client.open("PoopLog")
-#         sheet = client.open_by_key("1ZeeFkKA8PCTIZcHT4DMtJ2hfv4z0X3nUML680Ir4Ie0")
-#     except gspread.exceptions.SpreadsheetNotFound:
-#         try:
-#             # ✅ Create spreadsheet if it doesn’t exist
-#             sheet = client.create("PoopLog")
-
-#             # ✅ Share it automatically with the service account for safety
-#             client.insert_permission(
-#                 sheet.id,
-#                 None,
-#                 perm_type="anyone",
-#                 role="writer"
-#             )
-
-#             worksheet = sheet.get_worksheet(0)
-#             worksheet.append_row(['Date', 'User', 'Ease', 'Notes'])
-#             return worksheet
-#         except Exception as e:
-#             st.error(f"❌ Could not create Google Sheet: {e}")
-#             return None
-
-#     # ✅ Return first worksheet if exists
-#     return sheet.get_worksheet(0)
-
-# def load_data():
-#     """Load data from Google Sheets"""
-#     worksheet = get_worksheet()
-#     if worksheet is None:
-#         return pd.DataFrame(columns=['Date', 'User', 'Ease', 'Notes'])
-    
-#     try:
-#         data = worksheet.get_all_records()
-#         if not data:
-#             return pd.DataFrame(columns=['Date', 'User', 'Ease', 'Notes'])
-        
-#         df = pd.DataFrame(data)
-#         # Convert Ease column to float
-#         if 'Ease' in df.columns:
-#             df['Ease'] = pd.to_numeric(df['Ease'], errors='coerce')
-#         return df
-#     except Exception as e:
-#         st.error(f"Error loading data: {e}")
-#         return pd.DataFrame(columns=['Date', 'User', 'Ease', 'Notes'])
-
 def save_data(date, user, ease, notes):
     """Save a new entry to Google Sheets"""
     worksheet = get_worksheet()
@@ -341,84 +386,6 @@ with tab1:
             st.rerun()
         else:
             st.error("Failed to save entry")
-
-
-# with tab2:
-#     st.subheader("This Week's Comparison")
-
-#     # Filter data for current week
-#     week_dates = get_week_dates()
-#     week_start = week_dates[0]
-#     week_end = week_dates[6]
-
-#     if 'Date' in df.columns:
-#         # 🧹 Clean and fix Date column before filtering
-#         df['Date'] = pd.to_datetime(df['Date'], errors='coerce')
-
-#         # Optional: show invalid rows
-#         invalid_dates = df[df['Date'].isna()]
-#         if not invalid_dates.empty:
-#             st.warning("⚠️ Some invalid or empty Date entries were ignored:")
-#             st.dataframe(invalid_dates)
-
-#         # Drop invalid rows
-#         df = df.dropna(subset=['Date'])
-
-#         # 🗓️ Filter only this week's data
-#         week_data = df[
-#             (df['Date'] >= week_start) & (df['Date'] <= week_end)
-#         ]
-#     else:
-#         st.error("❌ 'Date' column not found in the Google Sheet. Please check the header name.")
-#         week_data = pd.DataFrame()
-
-#     # ✅ Only run visualization if we have data
-#     if len(week_data) > 0:
-#         # Categorize as easy or average
-#         week_data['Category'] = week_data['Ease'].apply(lambda x: 'Easy' if x >= 0.5 else 'Average')
-
-#         # Count by user and category
-#         comparison = week_data.groupby(['User', 'Category']).size().unstack(fill_value=0)
-
-#         # Create Plotly bar chart
-#         fig = go.Figure()
-
-#         for user_name in comparison.index:
-#             easy_count = comparison.loc[user_name, 'Easy'] if 'Easy' in comparison.columns else 0
-#             avg_count = comparison.loc[user_name, 'Average'] if 'Average' in comparison.columns else 0
-
-#             fig.add_trace(go.Bar(
-#                 name=user_name,
-#                 x=['Easy Poops 😎', 'Average Poops 😐'],
-#                 y=[easy_count, avg_count],
-#                 marker_color=['#7CFC00', '#FFB347'],
-#                 text=[easy_count, avg_count],
-#                 textposition='auto',
-#             ))
-
-#         fig.update_layout(
-#             title="Weekly Poop Comparison",
-#             xaxis_title="Poop Category",
-#             yaxis_title="Count",
-#             barmode='group',
-#             plot_bgcolor='#FAF3E0',
-#             paper_bgcolor='#FFF8E7',
-#             font=dict(color='#3B2F2F', size=12),
-#             hovermode='x unified',
-#             height=500
-#         )
-
-#         st.plotly_chart(fig, use_container_width=True)
-
-#         # Weekly stats table
-#         st.markdown("**Weekly Breakdown:**")
-#         st.dataframe(
-#             week_data[['Date', 'User', 'Ease', 'Notes']].sort_values('Date'),
-#             use_container_width=True
-#         )
-
-#     else:
-#         st.info("📭 No entries logged this week yet. Start logging to see comparisons!")
 
 with tab2:
     st.subheader("This Week's Comparison")
@@ -525,66 +492,6 @@ with tab2:
     else:
         st.info("📭 No entries logged this week yet. Start logging to see comparisons!")
 
-
-
-# with tab3:
-#     st.subheader("All-Time Statistics")
-    
-#     if len(df) > 0:
-#         col1, col2, col3, col4 = st.columns(4)
-        
-#         with col1:
-#             total_entries = len(df)
-#             st.metric("Total Entries", total_entries, "💩")
-        
-#         with col2:
-#             me_entries = len(df[df['User'] == 'Me'])
-#             st.metric("Your Entries", me_entries, "👤")
-        
-#         with col3:
-#             friend_entries = len(df[df['User'] == 'Friend'])
-#             st.metric("Friend's Entries", friend_entries, "👥")
-        
-#         with col4:
-#             avg_ease = df['Ease'].mean()
-#             st.metric("Avg Ease", f"{avg_ease:.2f}", "📊")
-        
-#         st.markdown("---")
-        
-#         # All-time comparison
-#         df['Category'] = df['Ease'].apply(lambda x: 'Easy' if x >= 0.5 else 'Average')
-#         all_time = df.groupby(['User', 'Category']).size().unstack(fill_value=0)
-        
-#         fig2 = go.Figure()
-        
-#         for user_name in all_time.index:
-#             easy_count = all_time.loc[user_name, 'Easy'] if 'Easy' in all_time.columns else 0
-#             avg_count = all_time.loc[user_name, 'Average'] if 'Average' in all_time.columns else 0
-            
-#             fig2.add_trace(go.Bar(
-#                 name=user_name,
-#                 x=['Easy Poops 😎', 'Average Poops 😐'],
-#                 y=[easy_count, avg_count],
-#                 marker_color=['#7CFC00', '#FFB347'],
-#                 text=[easy_count, avg_count],
-#                 textposition='auto',
-#             ))
-        
-#         fig2.update_layout(
-#             title="All-Time Poop Comparison",
-#             xaxis_title="Poop Category",
-#             yaxis_title="Count",
-#             barmode='group',
-#             plot_bgcolor='#FAF3E0',
-#             paper_bgcolor='#FFF8E7',
-#             font=dict(color='#3B2F2F', size=12),
-#             hovermode='x unified',
-#             height=500
-#         )
-        
-#         st.plotly_chart(fig2, use_container_width=True)
-#     else:
-#         st.info("📭 No data yet. Start logging entries to see statistics!")
 
 with tab3:
     st.subheader("All-Time Statistics")
