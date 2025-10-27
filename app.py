@@ -5,6 +5,54 @@ from datetime import datetime, timedelta
 import gspread
 from google.oauth2.service_account import Credentials
 
+st.markdown("""
+<style>
+/* Date picker dropdown */
+div[data-baseweb="datepicker"] {
+    background-color: #fff8e7 !important; /* cream background */
+    color: #2c2c2c !important; /* readable dark text */
+    border: 1px solid #e0d5b5 !important; /* subtle border */
+    box-shadow: 0px 2px 8px rgba(0,0,0,0.1) !important;
+}
+
+/* Calendar grid cells */
+div[data-baseweb="calendar"] {
+    background-color: #fff8e7 !important;
+    color: #2c2c2c !important;
+}
+
+/* Days in calendar */
+div[data-baseweb="calendar"] button {
+    background-color: transparent !important;
+    color: #2c2c2c !important;
+}
+
+/* Hovered/selected day */
+div[data-baseweb="calendar"] button:hover {
+    background-color: #f2e3b5 !important;
+    color: #000 !important;
+}
+div[data-baseweb="calendar"] button[aria-selected="true"] {
+    background-color: #f26c4f !important; /* your reddish highlight */
+    color: white !important;
+}
+
+/* Month and year text */
+div[data-baseweb="datepicker"] select, 
+div[data-baseweb="datepicker"] span {
+    color: #2c2c2c !important;
+}
+
+/* Remove weird dark outline when clicking */
+div[data-baseweb="datepicker"] *:focus {
+    outline: none !important;
+    box-shadow: none !important;
+}
+</style>
+""", unsafe_allow_html=True)
+
+
+
 # Set page config
 st.set_page_config(page_title="💩 PoopLog", layout="wide", initial_sidebar_state="expanded")
 import plotly.io as pio
