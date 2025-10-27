@@ -140,7 +140,6 @@ def get_google_sheets_client():
         st.info("📌 Please check your Streamlit secrets or service account setup.")
         return None
 
-
 def get_worksheet():
     """Get or create the PoopLog worksheet"""
     client = get_google_sheets_client()
@@ -148,22 +147,29 @@ def get_worksheet():
         return None
 
     try:
-        # ✅ Try to open the spreadsheet
-        # sheet = client.open("PoopLog")
+        # Try to open the existing sheet by ID
         sheet = client.open_by_key("1ZeeFkKA8PCTIZcHT4DMtJ2hfv4z0X3nUML680Ir4Ie0")
+        worksheet = sheet.get_worksheet(0)
+
+        # ✅ Ensure header row exists
+        headers = worksheet.row_values(1)
+        required_headers = ['Date', 'User', 'Ease', 'Notes']
+        if headers != required_headers:
+            worksheet.clear()
+            worksheet.append_row(required_headers)
+
+        return worksheet
+
     except gspread.exceptions.SpreadsheetNotFound:
         try:
-            # ✅ Create spreadsheet if it doesn’t exist
+            # ✅ Create sheet if not found
             sheet = client.create("PoopLog")
-
-            # ✅ Share it automatically with the service account for safety
             client.insert_permission(
                 sheet.id,
                 None,
                 perm_type="anyone",
                 role="writer"
             )
-
             worksheet = sheet.get_worksheet(0)
             worksheet.append_row(['Date', 'User', 'Ease', 'Notes'])
             return worksheet
@@ -171,60 +177,87 @@ def get_worksheet():
             st.error(f"❌ Could not create Google Sheet: {e}")
             return None
 
-    # ✅ Return first worksheet if exists
-    return sheet.get_worksheet(0)
-
-# def get_google_sheets_client():
-#     """Connect to Google Sheets using Streamlit secrets"""
-#     try:
-#         credentials_dict = st.secrets["google_sheets_credentials"]
-#         credentials = Credentials.from_service_account_info(
-#             credentials_dict,
-#             scopes=['https://www.googleapis.com/auth/spreadsheets']
-#         )
-#         return gspread.authorize(credentials)
-#     except Exception as e:
-#         st.error(f"❌ Error connecting to Google Sheets: {e}")
-#         st.info("📌 Please add your Google Sheets credentials to Streamlit secrets.")
-#         return None
-
-# def get_worksheet():
-#     """Get the PoopLog worksheet from Google Sheets"""
-#     client = get_google_sheets_client()
-#     if client is None:
-#         return None
-    
-#     try:
-#         # Try to open existing sheet
-#         sheet = client.open("PoopLog")
-#     except gspread.exceptions.SpreadsheetNotFound:
-#         # Create new sheet if it doesn't exist
-#         sheet = client.create("PoopLog")
-#         worksheet = sheet.get_worksheet(0)
-#         worksheet.append_row(['Date', 'User', 'Ease', 'Notes'])
-#         return worksheet
-    
-#     return sheet.get_worksheet(0)
 
 def load_data():
-    """Load data from Google Sheets"""
+    """Load data from Google Sheets safely"""
     worksheet = get_worksheet()
     if worksheet is None:
         return pd.DataFrame(columns=['Date', 'User', 'Ease', 'Notes'])
     
     try:
         data = worksheet.get_all_records()
+
+        # ✅ If empty, create headers
         if not data:
+            worksheet.clear()
+            worksheet.append_row(['Date', 'User', 'Ease', 'Notes'])
             return pd.DataFrame(columns=['Date', 'User', 'Ease', 'Notes'])
         
         df = pd.DataFrame(data)
-        # Convert Ease column to float
         if 'Ease' in df.columns:
             df['Ease'] = pd.to_numeric(df['Ease'], errors='coerce')
+        else:
+            df['Ease'] = 0.0
+        
         return df
     except Exception as e:
         st.error(f"Error loading data: {e}")
         return pd.DataFrame(columns=['Date', 'User', 'Ease', 'Notes'])
+
+
+
+# def get_worksheet():
+#     """Get or create the PoopLog worksheet"""
+#     client = get_google_sheets_client()
+#     if client is None:
+#         return None
+
+#     try:
+#         # ✅ Try to open the spreadsheet
+#         # sheet = client.open("PoopLog")
+#         sheet = client.open_by_key("1ZeeFkKA8PCTIZcHT4DMtJ2hfv4z0X3nUML680Ir4Ie0")
+#     except gspread.exceptions.SpreadsheetNotFound:
+#         try:
+#             # ✅ Create spreadsheet if it doesn’t exist
+#             sheet = client.create("PoopLog")
+
+#             # ✅ Share it automatically with the service account for safety
+#             client.insert_permission(
+#                 sheet.id,
+#                 None,
+#                 perm_type="anyone",
+#                 role="writer"
+#             )
+
+#             worksheet = sheet.get_worksheet(0)
+#             worksheet.append_row(['Date', 'User', 'Ease', 'Notes'])
+#             return worksheet
+#         except Exception as e:
+#             st.error(f"❌ Could not create Google Sheet: {e}")
+#             return None
+
+#     # ✅ Return first worksheet if exists
+#     return sheet.get_worksheet(0)
+
+# def load_data():
+#     """Load data from Google Sheets"""
+#     worksheet = get_worksheet()
+#     if worksheet is None:
+#         return pd.DataFrame(columns=['Date', 'User', 'Ease', 'Notes'])
+    
+#     try:
+#         data = worksheet.get_all_records()
+#         if not data:
+#             return pd.DataFrame(columns=['Date', 'User', 'Ease', 'Notes'])
+        
+#         df = pd.DataFrame(data)
+#         # Convert Ease column to float
+#         if 'Ease' in df.columns:
+#             df['Ease'] = pd.to_numeric(df['Ease'], errors='coerce')
+#         return df
+#     except Exception as e:
+#         st.error(f"Error loading data: {e}")
+#         return pd.DataFrame(columns=['Date', 'User', 'Ease', 'Notes'])
 
 def save_data(date, user, ease, notes):
     """Save a new entry to Google Sheets"""
