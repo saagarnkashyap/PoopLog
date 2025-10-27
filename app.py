@@ -296,7 +296,7 @@ st.markdown("---")
 # Sidebar
 with st.sidebar:
     st.header("📋 Settings")
-    user = st.radio("Select User:", ["Me", "Friend"], horizontal=True)
+    user = st.radio("Select User:", ["Me", "Nikhil"], horizontal=True)
     
     week_dates = get_week_dates()
     week_start = week_dates[0].strftime("%b %d")
@@ -455,8 +455,8 @@ with tab3:
             st.metric("Your Entries", me_entries, "👤")
         
         with col3:
-            friend_entries = len(df[df['User'] == 'Friend'])
-            st.metric("Friend's Entries", friend_entries, "👥")
+            Nikhil_entries = len(df[df['User'] == 'Nikhil'])
+            st.metric("Nikhil's Entries", Nikhil_entries, "👥")
         
         with col4:
             avg_ease = df['Ease'].mean()
@@ -810,13 +810,13 @@ st.markdown("<p style='text-align: center; color: #8B4513; font-size: 12px;'>Mad
 # col1, col2, col3 = st.columns([1, 2, 1])
 # with col2:
 #     st.markdown("<h1 style='text-align: center;'>💩 PoopLog</h1>", unsafe_allow_html=True)
-#     st.markdown("<p class='subtitle' style='text-align: center;'>Weekly Dump Tracker for You & Your Friend</p>", unsafe_allow_html=True)
+#     st.markdown("<p class='subtitle' style='text-align: center;'>Weekly Dump Tracker for You & Your Nikhil</p>", unsafe_allow_html=True)
 
 # st.divider()
 
 # # Sidebar
 # st.sidebar.markdown("### 👤 User Selection")
-# current_user = st.sidebar.radio("Who are you?", ["Me", "Friend"], horizontal=True)
+# current_user = st.sidebar.radio("Who are you?", ["Me", "Nikhil"], horizontal=True)
 
 # # Get current week
 # monday, sunday = get_current_week()
@@ -909,7 +909,7 @@ st.markdown("<p style='text-align: center; color: #8B4513; font-size: 12px;'>Mad
             
 #             fig = go.Figure()
             
-#             for user in ["Me", "Friend"]:
+#             for user in ["Me", "Nikhil"]:
 #                 user_data = comparison_data[comparison_data["User"] == user]
 #                 easy_count = user_data[user_data["Poop_Type"] == "Easy"]["Count"].values
 #                 avg_count = user_data[user_data["Poop_Type"] == "Average"]["Count"].values
@@ -961,19 +961,19 @@ st.markdown("<p style='text-align: center; color: #8B4513; font-size: 12px;'>Mad
 #                 day_name = get_day_name(current_day)
                 
 #                 me_logs = week_data[(week_data["User"] == "Me") & (week_data["Date"].dt.date == current_day.date())]
-#                 friend_logs = week_data[(week_data["User"] == "Friend") & (week_data["Date"].dt.date == current_day.date())]
+#                 Nikhil_logs = week_data[(week_data["User"] == "Nikhil") & (week_data["Date"].dt.date == current_day.date())]
                 
 #                 me_easy = len(me_logs[me_logs["Poop_Type"] == "Easy"])
 #                 me_avg = len(me_logs[me_logs["Poop_Type"] == "Average"])
-#                 friend_easy = len(friend_logs[friend_logs["Poop_Type"] == "Easy"])
-#                 friend_avg = len(friend_logs[friend_logs["Poop_Type"] == "Average"])
+#                 Nikhil_easy = len(Nikhil_logs[Nikhil_logs["Poop_Type"] == "Easy"])
+#                 Nikhil_avg = len(Nikhil_logs[Nikhil_logs["Poop_Type"] == "Average"])
                 
 #                 daily_data.append({
 #                     "Day": day_name,
 #                     "Me (Easy)": me_easy,
 #                     "Me (Avg)": me_avg,
-#                     "Friend (Easy)": friend_easy,
-#                     "Friend (Avg)": friend_avg
+#                     "Nikhil (Easy)": Nikhil_easy,
+#                     "Nikhil (Avg)": Nikhil_avg
 #                 })
             
 #             daily_df = pd.DataFrame(daily_data)
@@ -1000,16 +1000,16 @@ st.markdown("<p style='text-align: center; color: #8B4513; font-size: 12px;'>Mad
 #                     st.info("No logs yet")
             
 #             with col2:
-#                 st.markdown("#### 👥 Friend")
-#                 friend_data = week_data[week_data["User"] == "Friend"]
-#                 if len(friend_data) > 0:
+#                 st.markdown("#### 👥 Nikhil")
+#                 Nikhil_data = week_data[week_data["User"] == "Nikhil"]
+#                 if len(Nikhil_data) > 0:
 #                     metric_col1, metric_col2, metric_col3 = st.columns(3)
 #                     with metric_col1:
-#                         st.metric("Total Dumps", len(friend_data))
+#                         st.metric("Total Dumps", len(Nikhil_data))
 #                     with metric_col2:
-#                         st.metric("Avg Viscosity", f"{friend_data['Viscosity'].mean():.1f}/10")
+#                         st.metric("Avg Viscosity", f"{Nikhil_data['Viscosity'].mean():.1f}/10")
 #                     with metric_col3:
-#                         st.metric("Avg Ease", f"{friend_data['Ease'].mean():.2f}/1")
+#                         st.metric("Avg Ease", f"{Nikhil_data['Ease'].mean():.2f}/1")
 #                 else:
 #                     st.info("No logs yet")
 
