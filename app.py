@@ -241,6 +241,70 @@ div[role="dialog"], .stDateInput button {
     color: #7A5B44 !important; /* lighter brown placeholder */
 }
 </style>
+<style>
+/* 1. Fix dark top bar background (share/star/github bar) */
+header[data-testid="stHeader"] {
+    background-color: #FFF8E7 !important;
+    color: #3B2F2F !important;
+    border-bottom: 1px solid #D2B48C !important;
+}
+
+/* 2. Fix date picker calendar popup */
+div[role="dialog"], 
+.stDateInput button, 
+.stDateInput div[data-baseweb="popover"] {
+    background-color: #FAF3E0 !important;
+    color: #3B2F2F !important;
+    border: 1.5px solid #D2B48C !important;
+}
+
+/* Calendar cells */
+.stDateInput [data-testid="stDateInputDay"] {
+    background-color: #FAF3E0 !important;
+    color: #3B2F2F !important;
+}
+
+/* Highlighted date */
+.stDateInput [data-testid="stDateInputDaySelected"] {
+    background-color: #8B4513 !important;
+    color: #FFF8E7 !important;
+}
+
+/* Calendar header (month/year) */
+.stDateInput [data-testid="stDateInputHeader"] {
+    background-color: #FAF3E0 !important;
+    color: #3B2F2F !important;
+}
+
+/* 3. Fix slider background and thumb */
+.stSlider > div[data-baseweb="slider"] {
+    background-color: #FAF3E0 !important;
+    border: 1.5px solid #D2B48C !important;
+    border-radius: 8px !important;
+    padding: 6px !important;
+}
+.stSlider [role="slider"] {
+    background-color: #8B4513 !important;
+}
+
+/* 4. Fix text/date input boxes — remove ugly enclosures */
+.stDateInput, .stSlider {
+    background-color: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+}
+div[data-baseweb="input"], .stTextInput, .stDateInput input {
+    background-color: #FAF3E0 !important;
+    border: 1.5px solid #D2B48C !important;
+    border-radius: 8px !important;
+    color: #3B2F2F !important;
+}
+
+/* 5. Fix label text colors (Ease Level, etc.) */
+label, .stMarkdown p, .stMarkdown span {
+    color: #3B2F2F !important;
+}
+</style>
 
 
 """, unsafe_allow_html=True)
