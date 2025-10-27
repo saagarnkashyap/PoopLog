@@ -533,6 +533,14 @@ with tab2:
             fig.add_hline(y=y, line_dash="dot", line_color="#D3D3D3", opacity=0.4)
 
         st.plotly_chart(fig, use_container_width=True)
+        fig.update_layout(
+    hoverlabel=dict(
+        bgcolor="#FFF8E7",   # your cream background
+        font=dict(color="#3B2F2F"),  # dark brown text
+        bordercolor="#D2B48C"        # light brown border
+    )
+)
+
 
         # --- Summary Table ---
         st.markdown("### 📊 Weekly Ease Summary")
