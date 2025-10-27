@@ -7,73 +7,66 @@ from google.oauth2.service_account import Credentials
 
 st.markdown("""
 <style>
-/* ---------------------- */
-/* FIX STREAMLIT DATEPICKER DARK BACKGROUND */
-/* ---------------------- */
-
-/* Outer popover (the floating date picker) */
 div[data-baseweb="popover"] {
     background-color: #FFF8E7 !important;
     border: 1px solid #E0D5B5 !important;
     box-shadow: 0px 4px 10px rgba(0,0,0,0.1) !important;
 }
 
-/* Main datepicker panel */
 div[data-baseweb="datepicker"] {
     background-color: #FFF8E7 !important;
     color: #3B2F2F !important;
 }
 
-/* The main calendar body */
 div[data-baseweb="calendar"] {
     background-color: #FFF8E7 !important;
     color: #3B2F2F !important;
 }
 
-/* Top header (month + year row) */
+
 div[data-baseweb="calendar"] > div:first-child {
     background-color: #FFF8E7 !important;
     color: #3B2F2F !important;
     border-bottom: 1px solid #E0D5B5 !important;
 }
 
-/* Weekday header (Su, Mo, Tu...) */
+
 div[data-baseweb="calendar"] div[role="row"]:first-of-type {
     background-color: #FFF8E7 !important;
     color: #3B2F2F !important;
 }
 
-/* Each date cell */
+
 div[data-baseweb="calendar"] button {
     background-color: transparent !important;
     color: #3B2F2F !important;
     border-radius: 8px !important;
 }
 
-/* Hover state */
+
 div[data-baseweb="calendar"] button:hover {
     background-color: #F0E0C0 !important;
     color: #3B2F2F !important;
 }
 
-/* Selected date */
+
 div[data-baseweb="calendar"] button[aria-selected="true"] {
     background-color: #FF6B57 !important;
     color: #FFF8E7 !important;
 }
 
-/* Month navigation arrows */
+
 div[data-baseweb="calendar"] svg {
     fill: #3B2F2F !important;
 }
 
-/* Remove dark mask from overlay container */
+
 div[data-baseweb="popover"] div {
     background-color: #FFF8E7 !important;
     color: #3B2F2F !important;
 }
 
-/* Remove random black rectangles (caused by baseweb pseudo-elements) */
+
 div[data-baseweb="calendar"]::before,
 div[data-baseweb="calendar"]::after,
 div[data-baseweb="calendar"] *::before,
@@ -81,30 +74,25 @@ div[data-baseweb="calendar"] *::after {
     background: none !important;
 }
 
-/* Remove focus outlines */
+
 div[data-baseweb="datepicker"] *:focus {
     outline: none !important;
     box-shadow: none !important;
 }
 
-/* ---------------------- */
-/* UNIFORM SLIDER SECTION BACKGROUND FIX */
-/* ---------------------- */
+
 .stSlider, .stNumberInput, .stTextInput {
     background-color: #FFF8E7 !important;
     border: 1px solid #E0D5B5 !important;
 }
 
-/* Remove box enclosure highlight */
+
 .stSlider > div, .stNumberInput > div, .stTextInput > div {
     background-color: #FFF8E7 !important;
     border: none !important;
 }
 </style>
 """, unsafe_allow_html=True)
-
-
-
 
 # Set page config
 st.set_page_config(page_title="💩 PoopLog", layout="wide", initial_sidebar_state="expanded")
