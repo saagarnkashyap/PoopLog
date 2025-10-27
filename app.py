@@ -350,8 +350,29 @@ with tab2:
     week_start = week_dates[0]
     week_end = week_dates[6]
     
-    week_data = df[(pd.to_datetime(df['Date']) >= week_start) & (pd.to_datetime(df['Date']) <= week_end)]
-    
+    # week_data = df[(pd.to_datetime(df['Date']) >= week_start) & (pd.to_datetime(df['Date']) <= week_end)]
+    # 🧹 Clean and fix Date column before filtering
+if 'Date' in df.columns:
+    # Convert to datetime safely
+    df['Date'] = pd.to_datetime(df['Date'], errors='coerce')
+
+    # Show invalid rows (for debugging only; you can remove this later)
+    invalid_dates = df[df['Date'].isna()]
+    if not invalid_dates.empty:
+        st.warning("⚠️ Some invalid or empty Date entries were ignored:")
+        st.write(invalid_dates)
+
+    # Drop invalid rows
+    df = df.dropna(subset=['Date'])
+
+    # Filter only this week's data
+    week_data = df[
+        (df['Date'] >= week_start) & (df['Date'] <= week_end)
+    ]
+else:
+    st.error("❌ 'Date' column not found in the Google Sheet. Please check the header name.")
+    week_data = pd.DataFrame()
+
     if len(week_data) > 0:
         # Categorize as easy or average
         week_data['Category'] = week_data['Ease'].apply(lambda x: 'Easy' if x >= 0.5 else 'Average')
