@@ -7,6 +7,17 @@ from google.oauth2.service_account import Credentials
 
 # Set page config
 st.set_page_config(page_title="💩 PoopLog", layout="wide", initial_sidebar_state="expanded")
+import plotly.io as pio
+
+pio.templates["custom_light"] = pio.templates["plotly"]
+pio.templates["custom_light"]["layout"]["paper_bgcolor"] = "#fff8e7"  # background color
+pio.templates["custom_light"]["layout"]["plot_bgcolor"] = "#fff8e7"
+pio.templates["custom_light"]["layout"]["hoverlabel"] = dict(
+    bgcolor="#fff8e7",  # tooltip background color (same as app bg)
+    bordercolor="#c8b58a",  # soft border to make it visible
+    font=dict(color="#2c2c2c")  # readable dark text
+)
+pio.templates.default = "custom_light"
 
 # Custom CSS with the user's color palette
 st.markdown("""
