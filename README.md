@@ -1,61 +1,60 @@
-💩 PoopLog – The Weekly Ease Tracker
+# 💩 PoopLog – The Weekly Ease Tracker
 
-“Because every smooth journey deserves recognition.”
-Track. Compare. Reflect. 💩
+> “Because every smooth journey deserves recognition.”  
+> Track. Compare. Reflect. 💩
 
-🧠 Overview
+---
 
-PoopLog is a Streamlit-based web app designed for ultimate bowel accountability between friends.
-It syncs data from a shared Google Sheet, turning daily dumps into delightful data visualizations.
+## 🧠 Overview
 
-It’s part science, part fun — and entirely serious about gut progress.
-Watch your ease scores evolve through clean plots, summaries, and weekly leaderboards!
+**PoopLog** is a Streamlit-based web app designed for ultimate bowel accountability between friends.  
+It syncs data from a shared Google Sheet, turning *daily dumps* into delightful data visualizations.
 
-✨ Features
+It’s part science, part fun — and entirely serious about gut progress.  
+Watch your **ease scores** evolve through clean plots, summaries, and weekly leaderboards!
 
-✅ Weekly Comparison Dashboard
+---
 
-Smooth line chart showing who’s cruising and who’s struggling
+## ✨ Features
 
-Average trend line for a friendly competition vibe
+### ✅ Weekly Comparison Dashboard
+- Smooth line chart showing who’s *cruising* and who’s *struggling*
+- Average trend line for a friendly competition vibe
+- Summary table with each user’s mean ease level
 
-Summary table with each user’s mean ease level
+### 📊 All-Time Statistics
+- Total entries per user  
+- Average ease levels  
+- All-time trend chart with a soft aesthetic theme  
+- Donut chart for “Easy” vs “Average” logs  
 
-📊 All-Time Statistics
+### 🎨 Aesthetic UI
+- Creamy, clean theme (`#FFF8E7` + warm browns)  
+- Custom hover labels & smooth spline lines  
+- “Made with Kakka by Saagar for Nikhil” footer 😎  
 
-Total entries per user
+### 🗓️ Smart Date Handling
+- Auto-cleans invalid dates from Google Sheet  
+- Filters only the current week dynamically  
 
-Average ease levels
+---
 
-All-time trend chart with a soft aesthetic theme
+## 🧩 Tech Stack
 
-Donut chart for “Easy” vs “Average” logs
+| Component | Tech Used |
+|------------|------------|
+| **Frontend** | [Streamlit](https://streamlit.io/) |
+| **Visualization** | [Plotly](https://plotly.com/python/) |
+| **Data Source** | Google Sheets API |
+| **Language** | Python 3.x |
+| **Styling** | Custom Plotly layout (cream aesthetic) |
 
-🎨 Aesthetic UI
+---
 
-Creamy, clean theme (#FFF8E7 + warm browns)
+## ⚙️ Setup
 
-Custom hover labels & smooth spline lines
-
-“Made with Kakka by Saagar for Nikhil” footer 😎
-
-🗓️ Smart Date Handling
-
-Auto-cleans invalid dates from Google Sheet
-
-Filters only the current week dynamically
-
-🧩 Tech Stack
-Component	Tech Used
-Frontend	Streamlit
-
-Visualization	Plotly
-
-Data Source	Google Sheets API
-Language	Python 3.x
-Styling	Custom Plotly layout (cream aesthetic)
-⚙️ Setup
-1️⃣ Clone the repo
+### 1️⃣ Clone the repo
+```bash
 git clone https://github.com/yourusername/pooplog.git
 cd pooplog
 
