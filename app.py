@@ -117,37 +117,93 @@ if 'poop_data' not in st.session_state:
     st.session_state.poop_data = []
 
 @st.cache_resource
+@st.cache_resource
 def get_google_sheets_client():
     """Connect to Google Sheets using Streamlit secrets"""
     try:
         credentials_dict = st.secrets["google_sheets_credentials"]
-        credentials = Credentials.from_service_account_info(
-            credentials_dict,
-            scopes=['https://www.googleapis.com/auth/spreadsheets']
-        )
-        return gspread.authorize(credentials)
+
+        # ✅ Add all required scopes for Sheets and Drive
+        scopes = [
+            "https://www.googleapis.com/auth/spreadsheets",
+            "https://www.googleapis.com/auth/drive",
+            "https://www.googleapis.com/auth/drive.file",
+            "https://www.googleapis.com/auth/drive.readonly"
+        ]
+
+        credentials = Credentials.from_service_account_info(credentials_dict, scopes=scopes)
+        client = gspread.authorize(credentials)
+        return client
+
     except Exception as e:
         st.error(f"❌ Error connecting to Google Sheets: {e}")
-        st.info("📌 Please add your Google Sheets credentials to Streamlit secrets.")
+        st.info("📌 Please check your Streamlit secrets or service account setup.")
         return None
 
+
 def get_worksheet():
-    """Get the PoopLog worksheet from Google Sheets"""
+    """Get or create the PoopLog worksheet"""
     client = get_google_sheets_client()
     if client is None:
         return None
-    
+
     try:
-        # Try to open existing sheet
+        # ✅ Try to open the spreadsheet
         sheet = client.open("PoopLog")
     except gspread.exceptions.SpreadsheetNotFound:
-        # Create new sheet if it doesn't exist
-        sheet = client.create("PoopLog")
-        worksheet = sheet.get_worksheet(0)
-        worksheet.append_row(['Date', 'User', 'Ease', 'Notes'])
-        return worksheet
-    
+        try:
+            # ✅ Create spreadsheet if it doesn’t exist
+            sheet = client.create("PoopLog")
+
+            # ✅ Share it automatically with the service account for safety
+            client.insert_permission(
+                sheet.id,
+                None,
+                perm_type="anyone",
+                role="writer"
+            )
+
+            worksheet = sheet.get_worksheet(0)
+            worksheet.append_row(['Date', 'User', 'Ease', 'Notes'])
+            return worksheet
+        except Exception as e:
+            st.error(f"❌ Could not create Google Sheet: {e}")
+            return None
+
+    # ✅ Return first worksheet if exists
     return sheet.get_worksheet(0)
+
+# def get_google_sheets_client():
+#     """Connect to Google Sheets using Streamlit secrets"""
+#     try:
+#         credentials_dict = st.secrets["google_sheets_credentials"]
+#         credentials = Credentials.from_service_account_info(
+#             credentials_dict,
+#             scopes=['https://www.googleapis.com/auth/spreadsheets']
+#         )
+#         return gspread.authorize(credentials)
+#     except Exception as e:
+#         st.error(f"❌ Error connecting to Google Sheets: {e}")
+#         st.info("📌 Please add your Google Sheets credentials to Streamlit secrets.")
+#         return None
+
+# def get_worksheet():
+#     """Get the PoopLog worksheet from Google Sheets"""
+#     client = get_google_sheets_client()
+#     if client is None:
+#         return None
+    
+#     try:
+#         # Try to open existing sheet
+#         sheet = client.open("PoopLog")
+#     except gspread.exceptions.SpreadsheetNotFound:
+#         # Create new sheet if it doesn't exist
+#         sheet = client.create("PoopLog")
+#         worksheet = sheet.get_worksheet(0)
+#         worksheet.append_row(['Date', 'User', 'Ease', 'Notes'])
+#         return worksheet
+    
+#     return sheet.get_worksheet(0)
 
 def load_data():
     """Load data from Google Sheets"""
