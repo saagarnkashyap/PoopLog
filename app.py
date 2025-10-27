@@ -208,6 +208,39 @@ st.markdown("""
     }
 </style>
 
+<style>
+/* Fix input widgets staying dark (like date picker, text area, etc.) */
+div[data-baseweb="input"], 
+div[data-baseweb="textarea"], 
+div[data-baseweb="select"], 
+.stTextInput input, 
+.stTextArea textarea, 
+.stDateInput input {
+    background-color: #FAF3E0 !important; /* slightly darker than #FFF8E7 for depth */
+    color: #3B2F2F !important; /* dark brown text */
+    border: 1.5px solid #D2B48C !important;
+    border-radius: 8px !important;
+}
+
+/* Date picker calendar popup */
+div[role="dialog"], .stDateInput button {
+    background-color: #FAF3E0 !important;
+    color: #3B2F2F !important;
+    border: 1.5px solid #D2B48C !important;
+}
+
+/* Fix selected date highlight */
+.stDateInput [data-testid="stDateInputDaySelected"] {
+    background-color: #8B4513 !important; /* brown accent */
+    color: #FFF8E7 !important;
+}
+
+/* Fix text area placeholder text */
+.stTextArea textarea::placeholder,
+.stTextInput input::placeholder {
+    color: #7A5B44 !important; /* lighter brown placeholder */
+}
+</style>
 
 
 """, unsafe_allow_html=True)
