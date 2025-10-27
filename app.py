@@ -109,6 +109,58 @@ st.markdown("""
         color: var(--text-dark) !important;
     }
 </style>
+<style>
+    /* Sidebar styling */
+    section[data-testid="stSidebar"] {
+        background-color: #2C2C2C !important;
+        color: #F5EEDC !important;
+    }
+
+    /* General background */
+    body, .stApp, .main {
+        background-color: #FFF8E7 !important;
+        color: #3B2F2F !important;
+    }
+
+    /* Inputs (date, text, sliders, etc.) */
+    .stSelectbox, .stSlider, .stNumberInput, .stTextInput, div[data-baseweb="select"] {
+        background-color: #2C2C2C !important;
+        color: #F5EEDC !important;
+        border-radius: 8px !important;
+        border: 1px solid #D2B48C !important;
+    }
+
+    /* Date input text and labels */
+    .stDateInput label, .stDateInput input {
+        color: #F5EEDC !important;
+    }
+
+    /* Metrics */
+    .stMetric {
+        background-color: #2C2C2C !important;
+        color: #F5EEDC !important;
+    }
+
+    /* Tabs */
+    .stTabs [data-baseweb="tab-list"] button {
+        background-color: #2C2C2C !important;
+        color: #F5EEDC !important;
+        border-radius: 8px;
+        padding: 10px 20px;
+        margin-right: 5px;
+        border: 2px solid #8B4513 !important;
+    }
+
+    .stTabs [data-baseweb="tab-list"] button[aria-selected="true"] {
+        background-color: #8B4513 !important;
+        color: #FFF8E7 !important;
+    }
+
+    /* All text stays brown */
+    * {
+        color: #3B2F2F !important;
+    }
+</style>
 
 
 """, unsafe_allow_html=True)
